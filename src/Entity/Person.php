@@ -26,7 +26,7 @@ class Person
         #[ORM\Column(length: 100)]
         private string $lastName,
 
-        #[ORM\Column(type: 'enum', enumType: Sex::class)]
+        #[ORM\Column(length: 10, enumType: Sex::class)]
         private Sex $sex,
 
         #[ORM\Column(length: 255)]

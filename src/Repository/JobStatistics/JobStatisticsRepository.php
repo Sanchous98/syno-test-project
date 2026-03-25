@@ -15,25 +15,4 @@ class JobStatisticsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, JobStatistics::class);
     }
-
-    /**
-     * @return JobStatistics[]
-     */
-    public function findLatest(): array
-    {
-        $latestDate = $this->createQueryBuilder('js')
-            ->select('MAX(js.createdAt)')
-            ->getQuery()
-            ->getSingleScalarResult();
-
-        if ($latestDate === null) {
-            return [];
-        }
-
-        return $this->createQueryBuilder('js')
-            ->where('js.createdAt = :createdAt')
-            ->setParameter('createdAt', $latestDate)
-            ->getQuery()
-            ->getResult();
-    }
 }

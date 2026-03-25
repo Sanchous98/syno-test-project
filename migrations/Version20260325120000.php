@@ -16,13 +16,13 @@ final class Version20260325120000 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql('DROP INDEX idx_person_user_id ON person');
+        $this->addSql('DROP INDEX idx_person_user_id');
         $this->addSql('CREATE UNIQUE INDEX uniq_person_user_id ON person (user_id)');
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('DROP INDEX uniq_person_user_id ON person');
+        $this->addSql('DROP INDEX uniq_person_user_id');
         $this->addSql('CREATE INDEX idx_person_user_id ON person (user_id)');
     }
 }

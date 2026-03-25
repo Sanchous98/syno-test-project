@@ -15,13 +15,4 @@ class AgeStatisticsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, AgeStatistics::class);
     }
-
-    public function findLatest(): ?AgeStatistics
-    {
-        return $this->createQueryBuilder('a')
-            ->orderBy('a.createdAt', 'DESC')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
 }

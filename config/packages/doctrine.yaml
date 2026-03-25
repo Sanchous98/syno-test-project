@@ -1,73 +1,36 @@
 doctrine:
     dbal:
-        default_connection: default
-        connections:
-            default:
-                url: '%env(resolve:DATABASE_URL)%'
-                profiling_collect_backtrace: '%kernel.debug%'
-            job_statistics:
-                url: '%env(resolve:DATABASE_JOB_STATISTICS_URL)%'
-                profiling_collect_backtrace: '%kernel.debug%'
-            age_statistics:
-                url: '%env(resolve:DATABASE_AGE_STATISTICS_URL)%'
-                profiling_collect_backtrace: '%kernel.debug%'
+        url: '%env(resolve:DATABASE_URL)%'
+        profiling_collect_backtrace: '%kernel.debug%'
 
     orm:
-        default_entity_manager: default
-        entity_managers:
-            default:
-                connection: default
-                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-                schema_ignore_classes:
-                    - App\Entity\JobStatistics\JobStatistics
-                    - App\Entity\AgeStatistics\AgeStatistics
-                mappings:
-                    App:
-                        mapping: true
-                        is_bundle: false
-                        type: attribute
-                        dir: '%kernel.project_dir%/src/Entity'
-                        prefix: 'App\Entity'
-                        alias: App
-            job_statistics:
-                connection: job_statistics
-                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-                mappings:
-                    JobStatistics:
-                        mapping: true
-                        is_bundle: false
-                        dir: '%kernel.project_dir%/src/Entity/JobStatistics'
-                        prefix: 'App\Entity\JobStatistics'
-                        alias: JobStatistics
-            age_statistics:
-                connection: age_statistics
-                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-                mappings:
-                    AgeStatistics:
-                        mapping: true
-                        is_bundle: false
-                        dir: '%kernel.project_dir%/src/Entity/AgeStatistics'
-                        prefix: 'App\Entity\AgeStatistics'
-                        alias: AgeStatistics
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        schema_ignore_classes:
+            - App\Entity\AgeStatistics\AgeStatistics
+            - App\Entity\JobStatistics\JobStatistics
+        mappings:
+            App:
+                mapping: true
+                is_bundle: false
+                type: attribute
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'App\Entity'
+                alias: App
 
 when@test:
     doctrine:
         dbal:
-            connections:
-                default:
-                    dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
 
 when@prod:
     doctrine:
         orm:
-            entity_managers:
-                default:
-                    query_cache_driver:
-                        type: pool
-                        pool: doctrine.system_cache_pool
-                    result_cache_driver:
-                        type: pool
-                        pool: doctrine.result_cache_pool
+            query_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            result_cache_driver:
+                type: pool
+                pool: doctrine.result_cache_pool
 
     framework:
         cache:

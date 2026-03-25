@@ -1,7 +1,7 @@
 FROM php:8.4-fpm-alpine AS dev
 
 RUN --mount=type=bind,from=mlocati/php-extension-installer:latest,source=/usr/bin/install-php-extensions,target=/usr/local/bin/install-php-extensions \
-    install-php-extensions @composer redis pdo_mysql
+    install-php-extensions @composer redis pdo_pgsql
 
 WORKDIR /var/www/html
 
